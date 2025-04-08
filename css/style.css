@@ -381,9 +381,23 @@ button:focus {
   background-color: var(--color-accent-variant);
   position: fixed;
   right: 2rem;
-  bottom: 50vh;
+  bottom: 5vh;
   text-align: center;
   border-radius: 30%;
 }
 
-/* */
+/* footer */
+
+.footer {
+  background-color: var(--color-primary);
+  text-align: center;
+  padding: 1rem;
+}
+
+.footer__title{
+color: var(--color-text);
+}
+
+.footer__text {
+  color:  var(--color-text);
+}
