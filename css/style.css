@@ -394,10 +394,10 @@ button:focus {
   padding: 1rem;
 }
 
-.footer__title{
-color: var(--color-text);
+.footer__title {
+  color: var(--color-text);
 }
 
 .footer__text {
-  color:  var(--color-text);
+  color: var(--color-text);
 }

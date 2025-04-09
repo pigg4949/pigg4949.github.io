@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "NanumSquareNeoLight";
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.eot);
+  src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.eot?#iefix)
+      format("embedded-opentype"),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.woff)
+      format("woff"),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquareNeo/NanumSquareNeoTTF-aLt.ttf)
+      format("truetype");
+}
+
+:root {
+  --color-text-first: var(--color-black);
+  --color-text-second: var(--color-white);
+  --color-background-first: var(--color-white);
+  --color-background-second: var(--color-gray);
+  --color-background-third: var(--color-black);
+  --color-focus-first: var(--color-blue);
+  --color-focus-second: var(--color-orange);
+
+  --color-white: #fff;
+  --color-black: #050a13;
+  --color-blue: #629bf0;
+  --color-orange: #ff803c;
+  --color-gray: #5e667e;
+
+  --size-max-width: 1200px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.max-container {
+  width: var(--size-max-width);
+}
+
+.header {
+}
