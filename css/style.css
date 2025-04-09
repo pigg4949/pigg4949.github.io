@@ -401,3 +401,30 @@ button:focus {
 .footer__text {
   color: var(--color-text);
 }
+
+/* react style */
+@media (min-width: 1024px) {
+  body {
+  }
+}
+
+/* 화면 너비가 768px이상 1023px 이하일 때 (테블릿) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  body {
+    background-color: rgb(107, 215, 114);
+  }
+  html {
+    font-size: 20px;
+  }
+}
+
+/* 화면 너비가 767px 이하일 때 (모바일) */
+@media (max-width: 767px) {
+  body {
+    background-color: rgb(225, 173, 136);
+  }
+
+  html {
+    font-size: 24px;
+  }
+}

@@ -6,7 +6,8 @@
     <title>pigg4949&#39;s Portfolio</title>
     <meta
       name="description"
-      content="세상에서 가장 뛰어난 AI 개발자를 꿈꾸는 새싹 프로그래머"
+      content="세상에서 가장 뛰어난 AI 개발자를 꿈꾸는 새싹 프로그래머, I am Lee Kwang-ju, a programmer who dreams of becoming the best AI
+      developer in the universe."
     />
     <meta name="author" content="이광주 pigg4949" />
     <meta property="og:type" content="website" />
@@ -14,7 +15,10 @@
     <meta property="og:site_name" content="pigg4949's Website" />
     <meta property="og:title" content="pigg4949's Website" />
     <meta property="og:url" content="https://pigg4949.github.io/" />
-    <meta property="og:description" content="안녕하세요! 이광주입니다." />
+    <meta
+      property="og:description"
+      content="안녕하세요! 이광주입니다. Hi! I'm pigg4949"
+    />
     <meta
       property="og:image"
       content="https://pigg4949.github.io/images/latte_15.png"
@@ -31,17 +35,149 @@
     ></script>
   </head>
   <body>
-    <main>
-      <header>
-        <section class="max-container header">
-          <div class="header__box">
-            <h2 class="header__title">
-              <span class="header__focus">pigg4949</span>'s Portfolio
-            </h2>
-            <p>Welcome to my site.</p>
+    <!-- header start -->
+    <header>
+      <section>
+        <div class="header">
+          <div class="header__logo">
+            <img
+              class="header__logo__img"
+              src="./images/latte_15.ico"
+              alt="logo"
+            />
+            <h1 class="header__logo__title"><a href="#home">pigg4949</a></h1>
           </div>
-        </section>
-      </header>
+          <nav>
+            <ul class="header__nav">
+              <li>
+                <a class="header__nav__item" href="#about">pigg4949</a>
+              </li>
+              <li><a class="header__nav__item" href="#skill">Skill</a></li>
+              <li>
+                <a class="header__nav__item" href="#work">Portfolio</a>
+              </li>
+              <li>
+                <a class="header__nav__item" href="#license">License</a>
+              </li>
+              <li>
+                <a class="header__nav__item" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+    </header>
+    <!-- header end -->
+
+    <!-- main start -->
+    <main>
+      <!-- home start -->
+      <section id="#home" class="home">
+        <img class="home__logo" src="./images/latte_15.ico" alt="logo" />
+        <h2 class="home__title">
+          <span class="home__focus">pigg4949</span>'s Portfolio
+        </h2>
+        <p class="home__text">Welcome to my site.</p>
+        <p class="home__text">
+          I am Lee Kwang-ju, a programmer who dreams of becoming the best AI
+          developer in the universe.
+        </p>
+        <a class="home__contact" href="#contact">How to Contact</a>
+      </section>
+
+      <!-- about start -->
+      <section id="#about" class="about max-container">
+        <h2 class="about__title">about <span class="about__focus">이광주</span></h2>
+        <div class="about__profiles">
+          <div class="about__profile__left">
+            <div>
+          <img class="about__profile__img" src="./images/latte_15.png" alt=""></div></div>
+          <div class="about__profile__right">
+          <ul >
+            <li class="about__profile__list">
+              <i class="fa-solid fa-person"></i>
+              <span>GwangJu Lee</span>
+            </li>
+            <li class="about__profile__list">
+              <i class="fa-solid fa-cake-candles"></i>
+              <span>10. 27. 1995</span>
+            </li>
+            <li class="about__profile__list">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Gwangjin-gu, Seoul, Republic of Korea</span>
+            </li>
+            <li class="about__profile__list">
+              <i class="fa-solid fa-envelope"></i>
+              <span>pigg4949@gmail.com</span>
+            </li>
+            <li class="about__profile__list">
+              <i class="fa-solid fa-school-flag"></i>
+              <span>CHEONGJU UNV. Environmental engineering Department.</span>
+            </li>
+            <li class="about__profile__list">
+              <i class="fa-brands fa-github"></i>
+              <span>
+                <a
+                  class="about__profile__a"
+                  href="https://github.com/pigg4949"
+                  target="_blank"
+                  >github</a
+                >
+              </span>
+            </li>
+            <li class="about__profile__list">
+              <i class="fa-solid fa-blog"></i>
+              <span>
+                <a
+                  class="about__profile__a"
+                  href="https://pigg4949.github.io/"
+                  target="_blank"
+                  >Blog about Portfolio</a
+                >
+              </span>
+            </li>
+          </ul>
+        </div>
+        </div>
+        <div class="about__careers">
+            <ul class="about__career">
+                <li class="about__career__list">
+                    <img class="about__career__img" src="./images/ChungBuk.png" alt="ChungBuk logo" />
+                    <div>
+                      <p class="about__career__name"></p>
+                      <p class="about__career__period"></p>2023 ~ 2024</p>
+                    </div>
+                  </li>
+                <li class="about__career__list">
+                    <img class="about__career__img" src="./images/KFDA.svg" alt="KFDA logo" />
+                    <div>
+                      <p class="about__career__name">식품의약품안전처 주무관(연구보조)</p>
+                      <p class="about__career__period"></p>2023 ~ 2024</p>
+                    </div>
+                  </li>                  
+        </div>
+        <div class="about__goals">
+            <ul class="about__goal">
+            <li class="about__goal__list">
+              <i class="fa-brands fa-html5 skill__icon"></i>
+              <p class="about__goal__title">Front-end</p>
+              <p class="about__goal__text">HTML, CSS, JavaScript, Node.js, React</p>
+            </li>
+            <li class="about__goal__list">
+              <i class="fa-solid fa-mobile skill__icon"></i>
+              <p class="about__goal__title">Mobile</p>
+              <p class="about__goal__text">Android, IOS, Kotlin, React-Native</p>
+            </li>
+            <li class="skill">
+              <i class="fa-solid fa-rocket skill__icon"></i>
+              <p class="skill__title">AI</p>
+              <p class="about__goal__text">Tensorflow, Python, Pytorch, Numpy</p>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <!-- about end -->
     </main>
+    <!-- main end -->
   </body>
 </html>
