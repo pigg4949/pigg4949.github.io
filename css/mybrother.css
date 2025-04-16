@@ -1,0 +1,146 @@
+@font-face {
+  font-family: "Ownglyph_ryuttung-Rg";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Ownglyph_ryuttung-Rg";
+  line-height: 1.6;
+}
+
+header {
+  background-color: rgb(88, 82, 75);
+  color: white;
+  text-align: center;
+}
+
+nav {
+  background-color: rgb(148, 124, 96);
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  list-style: disc;
+  justify-content: center;
+  gap: 20px;
+}
+
+nav a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-size: 20px;
+}
+
+header {
+  background-color: rgb(88, 82, 75);
+  color: white;
+  text-align: center;
+}
+
+#dogs {
+  width: 100%;
+  background-color: rgb(88, 82, 75);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#dogs h2 {
+  position: absolute;
+  font-size: 30px;
+  right: 3%;
+  bottom: 10px;
+  color: white;
+  text-shadow: 3px 3px 5px white;
+}
+
+#dogs > div {
+  height: 300px;
+  border: 2px solid rgb(88, 82, 75);
+  border-radius: 20%;
+  margin: 30px auto;
+  position: relative;
+  width: 22%;
+  gap: 2%;
+}
+
+#dog1 {
+  background: url(../images/latte/latte_1.jpg) no-repeat center/cover;
+}
+
+#dog2 {
+  background: url(../images/latte/latte_2.jpg) no-repeat center/cover;
+}
+
+#dog3 {
+  background: url(../images/latte/latte_3.jpg) no-repeat center/cover;
+}
+
+#dog4 {
+  background: url(../images/latte/latte_4.jpg) no-repeat center/cover;
+}
+
+#dog5 {
+  background: url(../images/latte/latte_5.jpg) no-repeat center/cover;
+}
+
+#dog6 {
+  background: url(../images/latte/latte_6.jpg) no-repeat center/cover;
+}
+
+#dog7 {
+  background: url(../images/latte/latte_7.jpg) no-repeat center/cover;
+}
+
+#dog8 {
+  background: url(../images/latte/latte_8.jpg) no-repeat center/cover;
+}
+
+#dog9 {
+  background: url(../images/latte/latte_9.jpg) no-repeat center/cover;
+}
+
+#dog10 {
+  background: url(../images/latte/latte_10.jpg) no-repeat center/cover;
+}
+
+#dog11 {
+  background: url(../images/latte/latte_12.jpg) no-repeat center/cover;
+}
+
+#dog12 {
+  background: url(../images/latte/latte_12.jpg) no-repeat center/cover;
+}
+
+#dog13 {
+  background: url(../images/latte/latte_13.jpg) no-repeat center/cover;
+}
+
+#dog14 {
+  background: url(../images/latte/latte_14.jpg) no-repeat center/cover;
+}
+
+#dog15 {
+  background: url(../images/latte/latte_15.jpg) no-repeat center/cover;
+}
+
+#dog16 {
+  background: url(../images/latte/latte_16.jpg) no-repeat center/cover;
+}
+
+footer {
+  background-color: #888275;
+  color: black;
+  text-align: center;
+  padding: 30px;
+  margin: 10 10;
+}

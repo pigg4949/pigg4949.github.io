@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "Ownglyph_ryuttung-Rg";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_ryuttung-Rg.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Ownglyph_ryuttung-Rg";
+  line-height: 1.8;
+}
+
+nav {
+  background-color: rgb(148, 124, 96);
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  list-style: disc;
+  justify-content: center;
+  gap: 20px;
+}
+
+nav a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-size: 20px;
+}
+
+header {
+  background-color: rgb(88, 82, 75);
+  color: white;
+  text-align: center;
+}
+
+main {
+  background-color: antiquewhite;
+  width: 100%;
+  position: relative;
+}
+
+#eats {
+  width: 100%;
+  padding: 10px;
+  gap: 10px;
+  align-content: center;
+  color: black;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+#eats > div > img {
+  width: 50%;
+  height: auto;
+}
+
+#eats > div > img:hover {
+  transform: scale(1.8);
+  transition: transform 0.5s ease-in;
+}
+
+#eats > div {
+  border-radius: 10%;
+  margin: 5px;
+  padding: 1px;
+  align-content: center;
+  text-align: center;
+  border: 2px solid black;
+}
+
+li {
+  list-style: none;
+}
+
+footer {
+  background-color: #888275;
+  color: black;
+  text-align: center;
+  padding: 30px;
+  margin: 10 10;
+}
+
+@media (min-width: 1024px) {
+  #eats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  main > section > div {
+    width: 23%;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #eats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  main > section > div {
+    width: 48%;
+  }
+}
+
+@media (max-width: 767px) {
+  #eats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  main > section > div {
+    width: 100%;
+  }
+}

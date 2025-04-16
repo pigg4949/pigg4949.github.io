@@ -1,0 +1,53 @@
+body {
+  background-color: antiquewhite;
+}
+
+h1 {
+  text-align: center;
+  background-color: rgb(116, 255, 111);
+}
+
+p {
+  font-size: 20px;
+  background-color: aquamarine;
+}
+
+caption {
+  text-align: center;
+}
+
+table,
+th,
+td {
+  border: 2px solid black;
+}
+
+table {
+  width: 100%;
+  padding: 5%;
+}
+
+th,
+td {
+  font-size: 12px;
+}
+
+td {
+  text-align: center;
+}
+
+.diagonal {
+  background-image: linear-gradient(
+    to left bottom,
+    transparent calc(50% - 1px),
+    #000000,
+    transparent calc(50% + 1px)
+  );
+  background-size: 200% 200%;
+  background-position: center;
+}
+
+h2 {
+  text-align: left;
+  font-size: 20px;
+}
