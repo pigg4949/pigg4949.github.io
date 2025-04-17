@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To_Do_List</title>
+    <style>
+      body {
+        position: relative;
+        justify-content: center;
+        align-items: center;
+      }
+      #doListBox {
+        padding: 10px;
+      }
+      #doList {
+        list-style: none;
+        padding: 0;
+        position: relative;
+      }
+      .li1 {
+        background: #ffffff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .btn1,
+      .btn2 {
+        margin-left: 5px;
+      }
+      .btnBox {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        padding: 10px;
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        position: relative;
+        text-align: center;
+      "
+    >
+      <h2>📝 To Do List</h2>
+      <p
+        style="position: relative; text-align: center; justify-content: center"
+      >
+        <input
+          style="width: 70%; font-size: 1.5rem"
+          type="text"
+          id="doInput"
+          placeholder="할 일."
+        />
+        <button onclick="saveDo()">등록하기</button>
+      </p>
+      <h3>🏃🏃‍♂️🏃‍♀️🏃‍➡️🏃‍♀️‍➡️🏃‍♂️‍➡️</h3>
+      <div id="doListBox">
+        <ul id="doList"></ul>
+      </div>
+    </div>
+
+    <script>
+      let db; // 전역 변수 선언
+
+      // indexedDB 불러오고 do storage 만들기
+      const request = indexedDB.open("MyDoList", 1);
+
+      request.onupgradeneeded = function (e) {
+        db = e.target.result;
+        if (!db.objectStoreNames.contains("do")) {
+          db.createObjectStore("do", { keyPath: "id", autoIncrement: true });
+        }
+      };
+
+      request.onsuccess = function (e) {
+        db = e.target.result;
+        displayDo();
+      };
+
+      request.onerror = function () {
+        alert("IndexedDB 열기 실패");
+      };
+
+      // 할일 리스트 등록하기
+      function displayDo() {
+        const list = document.getElementById("doList");
+        list.innerHTML = "";
+
+        const tx = db.transaction("do", "readonly");
+        const store = tx.objectStore("do");
+        const request = store.openCursor();
+
+        request.onsuccess = function (e) {
+          const cursor = e.target.result;
+          if (cursor) {
+            const li = createListItem(cursor.value.id, cursor.value.text);
+            list.appendChild(li);
+            cursor.continue();
+          }
+        };
+      }
+
+      // 리스트 등록시 같이 만들어질 태그들 만들기
+      function createListItem(id, text) {
+        const li = document.createElement("li");
+        li.setAttribute("class", "li1");
+        li.dataset.id = id;
+
+        const span = document.createElement("span");
+        span.textContent = text;
+
+        const btnBox = document.createElement("div");
+        btnBox.setAttribute("class", "btnBox");
+
+        const btnEdit = document.createElement("button");
+        btnEdit.textContent = "수정";
+        btnEdit.setAttribute("class", "btn1");
+        btnEdit.onclick = function () {
+          editMode(li, id, text);
+        };
+
+        const btnDelete = document.createElement("button");
+        btnDelete.textContent = "삭제";
+        btnDelete.setAttribute("class", "btn2");
+        btnDelete.onclick = function () {
+          deleteDo(id);
+        };
+
+        btnBox.appendChild(btnEdit);
+        btnBox.appendChild(btnDelete);
+
+        li.appendChild(span);
+        li.appendChild(btnBox);
+
+        return li;
+      }
+
+      // 수정버튼 클릭후 저장/취소 활성화하기
+      function editMode(li, id, oldText) {
+        li.innerHTML = "";
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = oldText;
+        input.style.flex = "1";
+
+        const btnBox = document.createElement("div");
+        btnBox.className = "btnBox";
+
+        const btnSave = document.createElement("button");
+        btnSave.textContent = "저장";
+        btnSave.className = "btn1";
+        btnSave.onclick = function () {
+          saveEdit(id, input.value);
+        };
+
+        const btnCancel = document.createElement("button");
+        btnCancel.textContent = "취소";
+        btnCancel.className = "btn2";
+        btnCancel.onclick = function () {
+          displayDo();
+        };
+
+        btnBox.appendChild(btnSave);
+        btnBox.appendChild(btnCancel);
+
+        li.appendChild(input);
+        li.appendChild(btnBox);
+      }
+
+      // 저장 버튼 함수
+      function saveEdit(id, newText) {
+        const tx = db.transaction("do", "readwrite");
+        const store = tx.objectStore("do");
+        const request = store.get(id);
+
+        request.onsuccess = function (e) {
+          const data = e.target.result;
+          data.text = newText;
+
+          const updateRequest = store.put(data);
+
+          updateRequest.onsuccess = function () {
+            displayDo();
+          };
+        };
+      }
+
+      // 취소 버튼 함수
+      function deleteDo(id) {
+        const tx = db.transaction("do", "readwrite");
+        const store = tx.objectStore("do");
+        store.delete(id);
+
+        tx.oncomplete = function () {
+          displayDo();
+        };
+      }
+
+      // 스토리지에 do 저장하는 함수
+      function saveDo() {
+        const input = document.getElementById("doInput");
+        const text = input.value.trim();
+        if (!text) return;
+
+        const tx = db.transaction("do", "readwrite");
+        const store = tx.objectStore("do");
+        store.add({ text: text, created: new Date() });
+
+        tx.oncomplete = function () {
+          input.value = "";
+          displayDo();
+        };
+      }
+    </script>
+  </body>
+</html>
