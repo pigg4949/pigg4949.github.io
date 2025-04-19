@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주제 고르는 중</title>
+    <link rel="stylesheet" href="./HW_dataservice.css" />
+    <script
+      defer
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=false&libraries=services"
+    ></script>
+  </head>
+  <body>
+    <label for="lineSelect">호선 선택:</label>
+    <select id="lineSelect">
+      <option value="">-- 호선을 선택하세요 --</option>
+    </select>
+
+    <label for="stationSelect">역 선택:</label>
+    <select id="stationSelect" disabled>
+      <option value="">-- 먼저 호선을 선택하세요 --</option>
+    </select>
+
+    <p id="status">데이터를 가져오는 중입니다.</p>
+    <p>조회하기 설명하기 활성화되지않을 때, 역을 바꿨다 다시 선택해보세요!</p>
+
+    <br /><br />
+    <button id="searchButton" disabled>조회하기</button>
+    <button id="infoButton" disabled>설명보기</button>
+
+    <div id="mapContainer">
+      <div id="mapCard">
+        <div id="map"></div>
+        <div id="info">설명 로딩중...</div>
+      </div>
+    </div>
+
+    <script>
+      // API에서 데이터 가져오기
+      const dataKey = "6e786a614970696733336d62577357";
+
+      const url = `http://openapi.seoul.go.kr:8088/${dataKey}/json/TbSeoulmetroStOrigin/1/599/`;
+
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(`전체 응답 구조 확인 : ${JSON.stringify(data, null, 2)}`);
+
+          const RESULT = data.TbSeoulmetroStOrigin?.RESULT;
+          const row = data.TbSeoulmetroStOrigin?.row;
+
+          // 호선 select 채우기
+          const lineSelect = document.getElementById("lineSelect");
+
+          const lineNumList = [];
+          for (let i = 0; i < row.length; i++) {
+            const lineNum = row[i].SBWY_ROUT_LN;
+            if (lineNumList.includes(lineNum)) {
+            } else {
+              lineNumList.push(lineNum);
+            }
+          }
+
+          console.log(lineNumList);
+
+          lineNumList.forEach((line) => {
+            const lineOption = document.createElement("option");
+            lineOption.textContent = `${line}`;
+            lineSelect.appendChild(lineOption);
+          });
+
+          /* 호선 selected 채우기 끝 */
+
+          /* 호선 선택 시 역 select 채우기 */
+
+          const stationSelect = document.getElementById("stationSelect");
+
+          lineSelect.addEventListener("change", function () {
+            const selectedLine = this.value;
+
+            if (selectedLine === "") {
+              const defaultOption = document.createElement("option");
+              defaultOption.textContent = "-- 먼저 호선을 선택하세요 --";
+              stationSelect.appendChild(defaultOption);
+              stationSelect.disabled = true;
+              return;
+            }
+
+            const filteredStations = [];
+            for (let i = 0; i < row.length; i++) {
+              if (row[i].SBWY_ROUT_LN === selectedLine) {
+                filteredStations.push(row[i].STTN);
+              }
+            }
+
+            for (let i = 0; i < filteredStations.length; i++) {
+              const stationOption = document.createElement("option");
+              stationOption.textContent = filteredStations[i];
+              stationSelect.appendChild(stationOption);
+              stationSelect.value = filteredStations[i];
+            }
+            stationSelect.disabled = false;
+          });
+
+          /* 호선 선택 시 역 select 채우기 끝 */
+
+          /* 조회하기 버튼 누를 시 데이터 호출 및 지도 시작*/
+          let map;
+          let marker;
+          let geocoder;
+
+          kakao.maps.load(() => {
+            const mapContainer = document.getElementById("map");
+            const mapOption = {
+              center: new kakao.maps.LatLng(37.5665, 126.978), // 서울시청
+              level: 5,
+            };
+            map = new kakao.maps.Map(mapContainer, mapOption);
+            geocoder = new kakao.maps.services.Geocoder();
+          });
+
+          const searchButton = document.getElementById("searchButton");
+          const infoButton = document.getElementById("infoButton");
+
+          lineSelect.addEventListener("change", function () {
+            searchButton.disabled = true;
+            infoButton.disabled = true;
+          });
+
+          stationSelect.addEventListener("change", function () {
+            if (this.value !== "") {
+              searchButton.disabled = false;
+              infoButton.disabled = false;
+            } else {
+              searchButton.disabled = true;
+              infoButton.disabled = true;
+            }
+          });
+
+          searchButton.addEventListener("click", function () {
+            const stationName = stationSelect.value;
+            if (!stationName) return alert("역을 선택하세요.");
+
+            const places = new kakao.maps.services.Places(); // keywordSearch용 객체
+
+            places.keywordSearch(`${stationName}역`, function (result, status) {
+              if (status === kakao.maps.services.Status.OK) {
+                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                map.setCenter(coords);
+                if (marker) marker.setMap(null);
+                marker = new kakao.maps.Marker({
+                  map: map,
+                  position: coords,
+                });
+              } else {
+                alert("지도를 찾을 수 없습니다.");
+              }
+            });
+          });
+
+          let flipped = false;
+          infoButton.addEventListener("click", function () {
+            const mapCard = document.getElementById("mapCard");
+            flipped = !flipped;
+            if (flipped) {
+              mapCard.style.transform = "rotateY(180deg)";
+
+              // 선택한 역의 설명 찾아서 info div에 표시
+              const stationName = stationSelect.value;
+              let description = "설명 없음";
+
+              for (let i = 0; i < row.length; i++) {
+                if (row[i].STTN === stationName) {
+                  description = row[i].STTN_ORGN || "설명이 제공되지 않습니다.";
+                  break;
+                }
+              }
+              document.getElementById("info").textContent = description;
+            } else {
+              mapCard.style.transform = "rotateY(0deg)";
+            }
+          });
+
+          /* 조회하기 버튼 누를 시 데이터 호출 및 지도 끝 */
+        })
+        .catch((err) => {
+          console.error(`fetch 실패 또는 파싱 오류: ${err}`);
+          document.getElementById(`status`).innerText = `데이터 불러오기 실패`;
+        });
+    </script>
+  </body>
+</html>
