@@ -17,6 +17,8 @@
         padding: 10px;
       }
     </style>
+    <!-- ✅ 가장 먼저 Kakao Maps SDK를 autoload=true로 로드 -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=true&libraries=services"></script>
   </head>
   <body>
     <label for="lineSelect">호선 선택:</label>
@@ -45,126 +47,100 @@
       </div>
     </div>
 
-    <!-- ✅ Kakao SDK 비동기 로드 후 initApp 호출 -->
     <script>
-      window.addEventListener("DOMContentLoaded", () => {
-        const script = document.createElement("script");
-        script.src =
-          "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f4255232fc3c5b922233dca71510ac30&libraries=services";
-        script.onload = () => {
-          if (window.kakao && kakao.maps && kakao.maps.load) {
-            kakao.maps.load(() => {
-              console.log("✅ initApp 실행됨");
-              initApp();
-            });
-          } else {
-            console.error("❌ Kakao SDK 로딩 실패");
-          }
-        };
-        script.onerror = () => {
-          console.error("❌ Kakao SDK 스크립트 로드 실패");
-        };
-        document.head.appendChild(script);
+      // ✅ 바로 실행 가능한 구조 (Kakao 객체 이미 있음)
+      const mapContainer = document.getElementById("map");
+      const map = new kakao.maps.Map(mapContainer, {
+        center: new kakao.maps.LatLng(37.5665, 126.978),
+        level: 5,
       });
 
-      function initApp() {
-        const mapContainer = document.getElementById("map");
-        const map = new kakao.maps.Map(mapContainer, {
-          center: new kakao.maps.LatLng(37.5665, 126.978),
-          level: 5,
-        });
+      const places = new kakao.maps.services.Places();
+      let marker = null;
 
-        const places = new kakao.maps.services.Places();
-        let marker = null;
+      const lineSelect = document.getElementById("lineSelect");
+      const stationSelect = document.getElementById("stationSelect");
+      const searchButton = document.getElementById("searchButton");
+      const infoButton = document.getElementById("infoButton");
 
-        const lineSelect = document.getElementById("lineSelect");
-        const stationSelect = document.getElementById("stationSelect");
-        const searchButton = document.getElementById("searchButton");
-        const infoButton = document.getElementById("infoButton");
+      fetch("https://proxy-server-ba6a.onrender.com/proxy")
+        .then((res) => res.json())
+        .then((data) => {
+          const row = data.TbSeoulmetroStOrigin?.row;
+          if (!row || !Array.isArray(row))
+            throw new Error("역 정보가 올바르지 않습니다.");
 
-        fetch("https://proxy-server-ba6a.onrender.com/proxy")
-          .then((res) => res.json())
-          .then((data) => {
-            console.log("✅ 데이터 도착", data);
-            const row = data.TbSeoulmetroStOrigin?.row;
-            if (!row || !Array.isArray(row)) {
-              throw new Error("역 정보 데이터가 올바르지 않습니다.");
+          const lines = [...new Set(row.map((r) => r.SBWY_ROUT_LN))].sort();
+          lines.forEach((line) => {
+            const opt = document.createElement("option");
+            opt.value = line;
+            opt.textContent = line;
+            lineSelect.appendChild(opt);
+          });
+
+          lineSelect.addEventListener("change", () => {
+            stationSelect.innerHTML =
+              '<option value="">-- 역을 선택하세요 --</option>';
+            const selectedLine = lineSelect.value;
+            if (!selectedLine) {
+              stationSelect.disabled = true;
+              searchButton.disabled = true;
+              infoButton.disabled = true;
+              return;
             }
 
-            const lines = [...new Set(row.map((r) => r.SBWY_ROUT_LN))].sort();
-            lines.forEach((line) => {
+            const filtered = row.filter((r) => r.SBWY_ROUT_LN === selectedLine);
+            const stations = [...new Set(filtered.map((r) => r.STTN))].sort();
+            stations.forEach((st) => {
               const opt = document.createElement("option");
-              opt.value = line;
-              opt.textContent = line;
-              lineSelect.appendChild(opt);
+              opt.value = st;
+              opt.textContent = st;
+              stationSelect.appendChild(opt);
             });
 
-            lineSelect.addEventListener("change", () => {
-              stationSelect.innerHTML =
-                '<option value="">-- 역을 선택하세요 --</option>';
-              const selectedLine = lineSelect.value;
-              if (!selectedLine) {
-                stationSelect.disabled = true;
-                searchButton.disabled = true;
-                infoButton.disabled = true;
-                return;
-              }
-
-              const filtered = row.filter(
-                (r) => r.SBWY_ROUT_LN === selectedLine
-              );
-              const stations = [...new Set(filtered.map((r) => r.STTN))].sort();
-              stations.forEach((st) => {
-                const opt = document.createElement("option");
-                opt.value = st;
-                opt.textContent = st;
-                stationSelect.appendChild(opt);
-              });
-
-              stationSelect.disabled = false;
-              searchButton.disabled = false;
-              infoButton.disabled = false;
-              document.getElementById("status").textContent =
-                "데이터 로딩 완료.";
-            });
-
-            searchButton.addEventListener("click", () => {
-              const station = stationSelect.value;
-              if (!station) return alert("역을 선택하세요.");
-
-              places.keywordSearch(`${station}역`, (result, status) => {
-                if (status === kakao.maps.services.Status.OK) {
-                  const pos = new kakao.maps.LatLng(result[0].y, result[0].x);
-                  map.setCenter(pos);
-                  if (marker) marker.setMap(null);
-                  marker = new kakao.maps.Marker({ map, position: pos });
-                } else {
-                  alert("지도를 찾을 수 없습니다.");
-                }
-              });
-            });
-
-            let flipped = false;
-            infoButton.addEventListener("click", () => {
-              const mapCard = document.getElementById("mapCard");
-              flipped = !flipped;
-              mapCard.style.transform = flipped
-                ? "rotateY(180deg)"
-                : "rotateY(0deg)";
-              const station = stationSelect.value;
-              const infoEl = document.getElementById("info");
-              const desc =
-                row.find((r) => r.STTN === station)?.STTN_ORGN ||
-                "설명이 제공되지 않습니다.";
-              infoEl.textContent = desc;
-            });
-          })
-          .catch((err) => {
-            console.error("❌ 데이터 로딩 실패:", err);
-            document.getElementById("status").textContent =
-              "데이터 불러오기 실패";
+            stationSelect.disabled = false;
+            searchButton.disabled = false;
+            infoButton.disabled = false;
+            document.getElementById("status").textContent = "데이터 로딩 완료.";
           });
-      }
+
+          searchButton.addEventListener("click", () => {
+            const station = stationSelect.value;
+            if (!station) return alert("역을 선택하세요.");
+
+            places.keywordSearch(`${station}역`, (result, status) => {
+              if (status === kakao.maps.services.Status.OK) {
+                const pos = new kakao.maps.LatLng(result[0].y, result[0].x);
+                map.setCenter(pos);
+                if (marker) marker.setMap(null);
+                marker = new kakao.maps.Marker({ map, position: pos });
+              } else {
+                alert("지도를 찾을 수 없습니다.");
+              }
+            });
+          });
+
+          let flipped = false;
+          infoButton.addEventListener("click", () => {
+            const mapCard = document.getElementById("mapCard");
+            flipped = !flipped;
+            mapCard.style.transform = flipped
+              ? "rotateY(180deg)"
+              : "rotateY(0deg)";
+
+            const station = stationSelect.value;
+            const infoEl = document.getElementById("info");
+            const desc =
+              row.find((r) => r.STTN === station)?.STTN_ORGN ||
+              "설명이 제공되지 않습니다.";
+            infoEl.textContent = desc;
+          });
+        })
+        .catch((err) => {
+          console.error("❌ 데이터 로딩 실패:", err);
+          document.getElementById("status").textContent =
+            "데이터 불러오기 실패";
+        });
     </script>
   </body>
 </html>
