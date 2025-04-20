@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>지하철 역 정보</title>
     <style>
-      #mapContainer {
-        margin-top: 20px;
-      }
       #map {
         width: 100%;
         height: 350px;
@@ -48,16 +45,35 @@
       </div>
     </div>
 
-    <!-- Kakao Maps SDK -->
-    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=true&libraries=services"></script>
-
+    <!-- ✅ Kakao SDK 비동기 로드 후 initApp 호출 -->
     <script>
-      window.addEventListener("load", () => {
+      window.addEventListener("DOMContentLoaded", () => {
+        const script = document.createElement("script");
+        script.src =
+          "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=f4255232fc3c5b922233dca71510ac30&libraries=services";
+        script.onload = () => {
+          if (window.kakao && kakao.maps && kakao.maps.load) {
+            kakao.maps.load(() => {
+              console.log("✅ initApp 실행됨");
+              initApp();
+            });
+          } else {
+            console.error("❌ Kakao SDK 로딩 실패");
+          }
+        };
+        script.onerror = () => {
+          console.error("❌ Kakao SDK 스크립트 로드 실패");
+        };
+        document.head.appendChild(script);
+      });
+
+      function initApp() {
         const mapContainer = document.getElementById("map");
         const map = new kakao.maps.Map(mapContainer, {
           center: new kakao.maps.LatLng(37.5665, 126.978),
           level: 5,
         });
+
         const places = new kakao.maps.services.Places();
         let marker = null;
 
@@ -69,12 +85,12 @@
         fetch("https://proxy-server-ba6a.onrender.com/proxy")
           .then((res) => res.json())
           .then((data) => {
+            console.log("✅ 데이터 도착", data);
             const row = data.TbSeoulmetroStOrigin?.row;
             if (!row || !Array.isArray(row)) {
               throw new Error("역 정보 데이터가 올바르지 않습니다.");
             }
 
-            // 고유 호선 목록 추출 및 표시
             const lines = [...new Set(row.map((r) => r.SBWY_ROUT_LN))].sort();
             lines.forEach((line) => {
               const opt = document.createElement("option");
@@ -83,14 +99,9 @@
               lineSelect.appendChild(opt);
             });
 
-            // 호선 선택 → 해당 역 목록 표시
             lineSelect.addEventListener("change", () => {
-              stationSelect.innerHTML = "";
-              const defaultOpt = document.createElement("option");
-              defaultOpt.value = "";
-              defaultOpt.textContent = "-- 역을 선택하세요 --";
-              stationSelect.appendChild(defaultOpt);
-
+              stationSelect.innerHTML =
+                '<option value="">-- 역을 선택하세요 --</option>';
               const selectedLine = lineSelect.value;
               if (!selectedLine) {
                 stationSelect.disabled = true;
@@ -117,7 +128,6 @@
                 "데이터 로딩 완료.";
             });
 
-            // 조회하기 버튼 → 지도 검색
             searchButton.addEventListener("click", () => {
               const station = stationSelect.value;
               if (!station) return alert("역을 선택하세요.");
@@ -134,7 +144,6 @@
               });
             });
 
-            // 설명 버튼 → 카드 뒤집기
             let flipped = false;
             infoButton.addEventListener("click", () => {
               const mapCard = document.getElementById("mapCard");
@@ -142,7 +151,6 @@
               mapCard.style.transform = flipped
                 ? "rotateY(180deg)"
                 : "rotateY(0deg)";
-
               const station = stationSelect.value;
               const infoEl = document.getElementById("info");
               const desc =
@@ -156,7 +164,7 @@
             document.getElementById("status").textContent =
               "데이터 불러오기 실패";
           });
-      });
+      }
     </script>
   </body>
 </html>
