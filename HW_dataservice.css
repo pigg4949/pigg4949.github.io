@@ -1,4 +1,41 @@
 #mapContainer {
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+  perspective: 1000px;
+}
+
+#mapCard {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  position: absolute;
+}
+
+#info {
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  position: absolute;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#mapContainer {
   margin-top: 20px;
 }
 
