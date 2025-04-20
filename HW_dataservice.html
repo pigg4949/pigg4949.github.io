@@ -48,29 +48,17 @@
       </div>
     </div>
 
-    <!-- Kakao Map Script 동적 로드 -->
-    <script>
-      function loadKakaoMapScript(callback) {
-        const script = document.createElement("script");
-        script.src =
-          "https://dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=true&libraries=services";
-        script.onload = callback;
-        document.head.appendChild(script);
-      }
-    </script>
+    <!-- Kakao Maps SDK (자동 로드) -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=true&libraries=services"></script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        loadKakaoMapScript(initApp);
-      });
-
-      function initApp() {
+      window.addEventListener("load", () => {
+        // 지도 초기화
         const mapContainer = document.getElementById("map");
         const map = new kakao.maps.Map(mapContainer, {
           center: new kakao.maps.LatLng(37.5665, 126.978),
           level: 5,
         });
-
         const places = new kakao.maps.services.Places();
         let marker = null;
 
@@ -85,7 +73,6 @@
             const row = data.TbSeoulmetroStOrigin?.row;
             if (!row) throw new Error("데이터 형식 오류");
 
-            // 고유 호선 목록 정렬 후 추가
             const lines = [...new Set(row.map((r) => r.SBWY_ROUT_LN))].sort();
             lines.forEach((line) => {
               const opt = document.createElement("option");
@@ -161,11 +148,11 @@
             });
           })
           .catch((err) => {
-            console.error("데이터 오류:", err);
+            console.error("❌ 데이터 불러오기 실패:", err);
             document.getElementById("status").textContent =
               "데이터 불러오기 실패";
           });
-      }
+      });
     </script>
   </body>
 </html>
