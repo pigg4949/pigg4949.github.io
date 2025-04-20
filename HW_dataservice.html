@@ -110,81 +110,114 @@
           let marker;
           let geocoder;
 
-          const mapContainer = document.getElementById("map");
-          const mapOption = {
-            center: new kakao.maps.LatLng(37.5665, 126.978), // 서울시청
-            level: 5,
-          };
-          map = new kakao.maps.Map(mapContainer, mapOption);
-          geocoder = new kakao.maps.services.Geocoder();
-
-          const searchButton = document.getElementById("searchButton");
-          const infoButton = document.getElementById("infoButton");
-
-          lineSelect.addEventListener("change", function () {
-            searchButton.disabled = true;
-            infoButton.disabled = true;
-          });
-
-          stationSelect.addEventListener("change", function () {
-            if (this.value !== "") {
-              searchButton.disabled = false;
-              infoButton.disabled = false;
-            } else {
-              searchButton.disabled = true;
-              infoButton.disabled = true;
+          window.onload = function () {
+            // kakao 객체가 준비되었는지 체크
+            if (typeof kakao === "undefined") {
+              console.error("Kakao SDK가 로드되지 않았습니다.");
+              document.getElementById("status").innerText =
+                "Kakao 지도 로딩 실패";
+              return;
             }
-          });
 
-          searchButton.addEventListener("click", function () {
-            const stationName = stationSelect.value;
-            if (!stationName) return alert("역을 선택하세요.");
+            kakao.maps.load(() => {
+              const mapContainer = document.getElementById("map");
+              const mapOption = {
+                center: new kakao.maps.LatLng(37.5665, 126.978),
+                level: 5,
+              };
+              map = new kakao.maps.Map(mapContainer, mapOption);
+              geocoder = new kakao.maps.services.Geocoder();
 
-            const places = new kakao.maps.services.Places(); // keywordSearch용 객체
-
-            places.keywordSearch(`${stationName}역`, function (result, status) {
-              if (status === kakao.maps.services.Status.OK) {
-                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                map.setCenter(coords);
-                if (marker) marker.setMap(null);
-                marker = new kakao.maps.Marker({
-                  map: map,
-                  position: coords,
-                });
-              } else {
-                alert("지도를 찾을 수 없습니다.");
-              }
+              // 지도 초기화 끝났으니 데이터 fetch
+              init();
             });
-          });
+          };
 
-          let flipped = false;
-          infoButton.addEventListener("click", function () {
-            const mapCard = document.getElementById("mapCard");
-            flipped = !flipped;
-            if (flipped) {
-              mapCard.style.transform = "rotateY(180deg)";
+          function init() {
+            const dataKey = "6e786a614970696733336d62577357";
+            const url = `https://proxy-server-ba6a.onrender.com/proxy`;
 
-              // 선택한 역의 설명 찾아서 info div에 표시
-              const stationName = stationSelect.value;
-              let description = "설명 없음";
+            fetch(url)
+              .then((res) => res.json())
+              .then((data) => {
+                const searchButton = document.getElementById("searchButton");
+                const infoButton = document.getElementById("infoButton");
 
-              for (let i = 0; i < row.length; i++) {
-                if (row[i].STTN === stationName) {
-                  description = row[i].STTN_ORGN || "설명이 제공되지 않습니다.";
-                  break;
-                }
-              }
-              document.getElementById("info").textContent = description;
-            } else {
-              mapCard.style.transform = "rotateY(0deg)";
-            }
-          });
+                lineSelect.addEventListener("change", function () {
+                  searchButton.disabled = true;
+                  infoButton.disabled = true;
+                });
 
-          /* 조회하기 버튼 누를 시 데이터 호출 및 지도 끝 */
-        })
-        .catch((err) => {
-          console.error(`fetch 실패 또는 파싱 오류: ${err}`);
-          document.getElementById(`status`).innerText = `데이터 불러오기 실패`;
+                stationSelect.addEventListener("change", function () {
+                  if (this.value !== "") {
+                    searchButton.disabled = false;
+                    infoButton.disabled = false;
+                  } else {
+                    searchButton.disabled = true;
+                    infoButton.disabled = true;
+                  }
+                });
+
+                searchButton.addEventListener("click", function () {
+                  const stationName = stationSelect.value;
+                  if (!stationName) return alert("역을 선택하세요.");
+
+                  const places = new kakao.maps.services.Places(); // keywordSearch용 객체
+
+                  places.keywordSearch(
+                    `${stationName}역`,
+                    function (result, status) {
+                      if (status === kakao.maps.services.Status.OK) {
+                        const coords = new kakao.maps.LatLng(
+                          result[0].y,
+                          result[0].x
+                        );
+                        map.setCenter(coords);
+                        if (marker) marker.setMap(null);
+                        marker = new kakao.maps.Marker({
+                          map: map,
+                          position: coords,
+                        });
+                      } else {
+                        alert("지도를 찾을 수 없습니다.");
+                      }
+                    }
+                  );
+                });
+
+                let flipped = false;
+                infoButton.addEventListener("click", function () {
+                  const mapCard = document.getElementById("mapCard");
+                  flipped = !flipped;
+                  if (flipped) {
+                    mapCard.style.transform = "rotateY(180deg)";
+
+                    // 선택한 역의 설명 찾아서 info div에 표시
+                    const stationName = stationSelect.value;
+                    let description = "설명 없음";
+
+                    for (let i = 0; i < row.length; i++) {
+                      if (row[i].STTN === stationName) {
+                        description =
+                          row[i].STTN_ORGN || "설명이 제공되지 않습니다.";
+                        break;
+                      }
+                    }
+                    document.getElementById("info").textContent = description;
+                  } else {
+                    mapCard.style.transform = "rotateY(0deg)";
+                  }
+                });
+              })
+
+              /* 조회하기 버튼 누를 시 데이터 호출 및 지도 끝 */
+              .catch((err) => {
+                console.error(`fetch 실패 또는 파싱 오류: ${err}`);
+                document.getElementById(
+                  `status`
+                ).innerText = `데이터 불러오기 실패`;
+              });
+          }
         });
     </script>
   </body>
