@@ -4,7 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>지하철 역 정보</title>
-    <link rel="stylesheet" href="./HW_dataservice.css" />
+    <style>
+      #map {
+        width: 100%;
+        height: 350px;
+      }
+      #mapCard {
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+      }
+      #info {
+        padding: 10px;
+      }
+    </style>
+    <!-- ✅ 가장 먼저 Kakao Maps SDK를 autoload=true로 로드 -->
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=true&libraries=services"></script>
   </head>
   <body>
@@ -29,16 +42,13 @@
 
     <div id="mapContainer">
       <div id="mapCard">
-        <div id="mapFront">
-          <div id="map"></div>
-        </div>
-        <div id="mapBack">
-          <div id="info">설명 로딩중...</div>
-        </div>
+        <div id="map"></div>
+        <div id="info">설명 로딩중...</div>
       </div>
     </div>
 
     <script>
+      // ✅ 바로 실행 가능한 구조 (Kakao 객체 이미 있음)
       const mapContainer = document.getElementById("map");
       const map = new kakao.maps.Map(mapContainer, {
         center: new kakao.maps.LatLng(37.5665, 126.978),
