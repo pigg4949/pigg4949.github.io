@@ -48,12 +48,11 @@
       </div>
     </div>
 
-    <!-- Kakao Maps SDK (자동 로드) -->
+    <!-- Kakao Maps SDK -->
     <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=true&libraries=services"></script>
 
     <script>
       window.addEventListener("load", () => {
-        // 지도 초기화
         const mapContainer = document.getElementById("map");
         const map = new kakao.maps.Map(mapContainer, {
           center: new kakao.maps.LatLng(37.5665, 126.978),
@@ -71,8 +70,11 @@
           .then((res) => res.json())
           .then((data) => {
             const row = data.TbSeoulmetroStOrigin?.row;
-            if (!row) throw new Error("데이터 형식 오류");
+            if (!row || !Array.isArray(row)) {
+              throw new Error("역 정보 데이터가 올바르지 않습니다.");
+            }
 
+            // 고유 호선 목록 추출 및 표시
             const lines = [...new Set(row.map((r) => r.SBWY_ROUT_LN))].sort();
             lines.forEach((line) => {
               const opt = document.createElement("option");
@@ -81,6 +83,7 @@
               lineSelect.appendChild(opt);
             });
 
+            // 호선 선택 → 해당 역 목록 표시
             lineSelect.addEventListener("change", () => {
               stationSelect.innerHTML = "";
               const defaultOpt = document.createElement("option");
@@ -100,11 +103,10 @@
                 (r) => r.SBWY_ROUT_LN === selectedLine
               );
               const stations = [...new Set(filtered.map((r) => r.STTN))].sort();
-
-              stations.forEach((station) => {
+              stations.forEach((st) => {
                 const opt = document.createElement("option");
-                opt.value = station;
-                opt.textContent = station;
+                opt.value = st;
+                opt.textContent = st;
                 stationSelect.appendChild(opt);
               });
 
@@ -115,6 +117,7 @@
                 "데이터 로딩 완료.";
             });
 
+            // 조회하기 버튼 → 지도 검색
             searchButton.addEventListener("click", () => {
               const station = stationSelect.value;
               if (!station) return alert("역을 선택하세요.");
@@ -131,6 +134,7 @@
               });
             });
 
+            // 설명 버튼 → 카드 뒤집기
             let flipped = false;
             infoButton.addEventListener("click", () => {
               const mapCard = document.getElementById("mapCard");
@@ -148,7 +152,7 @@
             });
           })
           .catch((err) => {
-            console.error("❌ 데이터 불러오기 실패:", err);
+            console.error("❌ 데이터 로딩 실패:", err);
             document.getElementById("status").textContent =
               "데이터 불러오기 실패";
           });
