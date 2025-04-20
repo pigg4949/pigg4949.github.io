@@ -8,7 +8,7 @@
     <script
       defer
       type="text/javascript"
-      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&autoload=false&libraries=services"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4255232fc3c5b922233dca71510ac30&libraries=services"
     ></script>
   </head>
   <body>
@@ -110,15 +110,13 @@
           let marker;
           let geocoder;
 
-          kakao.maps.load(() => {
-            const mapContainer = document.getElementById("map");
-            const mapOption = {
-              center: new kakao.maps.LatLng(37.5665, 126.978), // 서울시청
-              level: 5,
-            };
-            map = new kakao.maps.Map(mapContainer, mapOption);
-            geocoder = new kakao.maps.services.Geocoder();
-          });
+          const mapContainer = document.getElementById("map");
+          const mapOption = {
+            center: new kakao.maps.LatLng(37.5665, 126.978), // 서울시청
+            level: 5,
+          };
+          map = new kakao.maps.Map(mapContainer, mapOption);
+          geocoder = new kakao.maps.services.Geocoder();
 
           const searchButton = document.getElementById("searchButton");
           const infoButton = document.getElementById("infoButton");
