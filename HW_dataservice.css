@@ -91,18 +91,6 @@ button:hover {
   color: #333;
 }
 
-#info {
-  transform: rotateY(180deg);
-  background: #fff;
-  padding: 20px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: left;
-  color: #333;
-}
-
 /* 실제 지도 박스 */
 #map {
   width: 100%;

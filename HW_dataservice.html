@@ -32,9 +32,7 @@
         <div id="mapFront">
           <div id="map"></div>
         </div>
-        <div id="mapBack">
-          <div id="info">설명 로딩중...</div>
-        </div>
+        <div id="mapBack"></div>
       </div>
     </div>
 
@@ -119,7 +117,7 @@
               : "rotateY(0deg)";
 
             const station = stationSelect.value;
-            const infoEl = document.getElementById("info");
+            const infoEl = document.getElementById("mapBack");
             const desc =
               row.find((r) => r.STTN === station)?.STTN_ORGN ||
               "설명이 제공되지 않습니다.";
