@@ -43,18 +43,17 @@ button:hover {
   width: 100%;
   height: 400px;
   margin-top: 30px;
-  perspective: 1200px; /* 🔥 3D 효과 핵심 */
+  perspective: 1200px;
 }
 
 #mapCard {
   width: 100%;
   height: 100%;
   transition: transform 0.8s;
-  transform-style: preserve-3d; /* 🔥 필수 */
+  transform-style: preserve-3d;
   position: relative;
   border: 3px solid #a89b8f;
   border-radius: 10px;
-  overflow: hidden;
   background: #fff;
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -66,16 +65,14 @@ button:hover {
   height: 100%;
   top: 0;
   left: 0;
-  backface-visibility: hidden; /* 🔥 필수 */
+  backface-visibility: hidden;
 }
 
-/* 앞면: 지도 */
 #mapFront {
   transform: rotateY(0deg);
   z-index: 2;
 }
 
-/* 뒷면: 설명 */
 #mapBack {
   transform: rotateY(180deg);
   background-color: #fff;
