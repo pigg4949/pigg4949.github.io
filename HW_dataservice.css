@@ -89,6 +89,7 @@ button:hover {
   line-height: 1.5;
   text-align: left;
   color: #333;
+  z-index: 1;
 }
 
 /* 실제 지도 박스 */
