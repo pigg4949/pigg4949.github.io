@@ -1,4 +1,4 @@
-/* ✅ 한글 웹폰트 적용 */
+/* 한글 웹폰트 적용 */
 @import url("https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap");
 
 body {
@@ -8,7 +8,7 @@ body {
   padding: 20px;
 }
 
-/* ✅ 입력 섹션 */
+/* 입력 섹션 */
 label {
   font-weight: bold;
   margin-right: 8px;
