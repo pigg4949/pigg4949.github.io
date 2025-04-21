@@ -110,19 +110,27 @@
 
           let flipped = false;
           infoButton.addEventListener("click", () => {
-            const mapCard = document.getElementById("mapFront");
+            const mapCard = document.getElementById("mapCard");
             flipped = !flipped;
-            console.log("📦 현재 flipped 상태:", flipped);
             mapCard.style.transform = flipped
               ? "rotateY(180deg)"
               : "rotateY(0deg)";
 
+            // ✅ 앞면 숨김 처리
+
+            const mapBack = document.getElementById("mapBack");
+            console.log("📦 현재 flipped 상태:", flipped);
+            const mapFront = ducument.getElementById("mapFront");
+            mapFront.style.display = flipped ? "none" : "block";
+            mapBack.style.display = flipped ? "block" : "none";
+            mapFront.veiw;
+
             const station = stationSelect.value;
-            const infoEl = document.getElementById("mapBack");
+
             const desc =
               row.find((r) => r.STTN === station)?.STTN_ORGN ||
               "설명이 제공되지 않습니다.";
-            infoEl.textContent = desc;
+            mapBack.textContent = desc;
           });
         })
         .catch((err) => {
