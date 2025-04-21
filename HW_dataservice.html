@@ -29,8 +29,12 @@
 
     <div id="mapContainer">
       <div id="mapCard">
-        <div id="map"></div>
-        <div id="mapBack"></div>
+        <div id="mapFront">
+          <div id="map"></div>
+        </div>
+        <div id="mapBack">
+          <div id="info">설명 로딩중...</div>
+        </div>
       </div>
     </div>
 
@@ -48,11 +52,18 @@
       const stationSelect = document.getElementById("stationSelect");
       const searchButton = document.getElementById("searchButton");
       const infoButton = document.getElementById("infoButton");
+      const mapCard = document.getElementById("mapCard");
+      const mapFront = document.getElementById("mapFront");
+      const mapBack = document.getElementById("mapBack");
+      const infoEl = document.getElementById("info");
+
+      let flipped = false;
+      let row = [];
 
       fetch("https://proxy-server-ba6a.onrender.com/proxy")
         .then((res) => res.json())
         .then((data) => {
-          const row = data.TbSeoulmetroStOrigin?.row;
+          row = data.TbSeoulmetroStOrigin?.row;
           if (!row || !Array.isArray(row))
             throw new Error("역 정보가 올바르지 않습니다.");
 
@@ -106,14 +117,17 @@
             });
           });
 
-          let flipped = false;
           infoButton.addEventListener("click", () => {
             const station = stationSelect.value;
-
             const desc =
               row.find((r) => r.STTN === station)?.STTN_ORGN ||
               "설명이 제공되지 않습니다.";
-            mapBack.textContent = desc;
+            infoEl.textContent = desc;
+
+            flipped = !flipped;
+            mapCard.style.transform = flipped
+              ? "rotateY(180deg)"
+              : "rotateY(0deg)";
           });
         })
         .catch((err) => {
