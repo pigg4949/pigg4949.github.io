@@ -75,7 +75,7 @@ button:hover {
 
 /* 앞면: 지도 */
 #mapFront {
-  z-index: 2;
+  transform: rotateY(0deg);
 }
 
 /* 뒷면: 설명 */
@@ -89,7 +89,6 @@ button:hover {
   line-height: 1.5;
   text-align: left;
   color: #333;
-  z-index: 1;
 }
 
 /* 실제 지도 박스 */

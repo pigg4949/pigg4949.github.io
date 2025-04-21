@@ -89,6 +89,11 @@ button:focus {
   align-items: center;
   z-index: 1;
 }
+
+.header--dark {
+  background-color: var(--color-primary-variant);
+}
+
 .header__logo {
   display: flex;
   align-items: center;
