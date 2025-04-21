@@ -1,7 +1,7 @@
 const header = document.querySelector(".header");
 
-const headerHeight = header.offsetHeight;
-console.log(headerHeight); // 70
+const headerHeight = header.offsetHeight; // 요소의 총 높이
+// console.log(headerHeight); // 70
 
 document.addEventListener("scroll", () => {
   if (window.scrollY > headerHeight) {
@@ -13,7 +13,7 @@ document.addEventListener("scroll", () => {
   }
 });
 
-const home = document.querySelector(".home_container");
+const home = document.querySelector(".home__container");
 const homeHeight = home.offsetHeight;
 document.addEventListener("scroll", () => {
   home.style.opacity = 1 - window.scrollY / homeHeight;

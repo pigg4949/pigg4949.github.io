@@ -32,6 +32,7 @@
       crossorigin="anonymous"
     ></script>
     <script defer src="./js/main.js"></script>
+    <script defer src="./js/projects.js"></script>
   </head>
   <body>
     <!-- Header start -->
@@ -207,181 +208,138 @@
       <!-- #skills end -->
 
       <!-- #work start -->
-      <section id="work" class="works">
+      <section id="work" class="section">
         <div class="max-container">
-          <div class="work">
-            <h2 class="title">Portfolio</h2>
-            <p class="categories">Projects</p>
-            <ul>
-              <li>
-                <button class="category" data-category="all">
-                  ALL <span>10</span>
-                </button>
-              </li>
-              <li>
-                <button class="category" data-category="front-end">
-                  Front-end <span>3</span>
-                </button>
-              </li>
-              <li>
-                <button class="category" data-category="mobile">
-                  Mobile <span>3</span>
-                </button>
-              </li>
-              <li>
-                <button class="category" data-category="AI">
-                  AI <span>4</span>
-                </button>
-              </li>
-            </ul>
-          </div>
-          <div class="projects">
-            <ul>
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+          <h2 class="title">포트폴리오</h2>
+          <p class="description">Projects</p>
+          <ul class="categories">
+            <li>
+              <button class="category category--selected" data-category="all">
+                ALL <span class="category__count">10</span>
+              </button>
+            </li>
+            <li>
+              <button class="category" data-category="front-end">
+                Front-end <span class="category__count">3</span>
+              </button>
+            </li>
+            <li>
+              <button class="category" data-category="mobile">
+                Mobile <span class="category__count">3</span>
+              </button>
+            </li>
+            <li>
+              <button class="category" data-category="ai">
+                AI <span class="category__count">4</span>
+              </button>
+            </li>
+          </ul>
+          <ul class="projects">
+            <li class="project" data-type="front-end">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #1</h3>
+                  <p>프론트엔드 작업1</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="front-end">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #2</h3>
+                  <p>프론트엔드 작업2</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="front-end">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #3</h3>
+                  <p>프론트엔드 작업3</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="mobile">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #4</h3>
+                  <p>모바일 작업1</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="mobile">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #5</h3>
+                  <p>모바일 작업2</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="mobile">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #6</h3>
+                  <p>모바일 작업3</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="ai">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #7</h3>
+                  <p>AI 작업1</p>
                 </div>
-              </li>
-
-              <li class="project">
-                <a class="project__a" href="#" target="_black"
-                  ><img
-                    class="project__img"
-                    src="./images/pj_sample.png"
-                    alt="project img"
-                /></a>
-                <div>
-                  <h3 class="project__title">project #1</h3>
-                  <p class="project__description">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Quam deserunt modi ea vel perspiciatis, odio, tenetur quas
-                    esse perferendis ad aperiam. Omnis eveniet quae odit saepe
-                    aspernatur cupiditate dolor optio!
-                  </p>
+              </a>
+            </li>
+            <li class="project" data-type="ai">
+              <a href="#" target="_blank">
+                <img
+                  src="./images/pj_sample.png"
+                  alt="project 이미지"
+                  class="project__img"
+                />
+                <div class="project__metadata">
+                  <h3 class="project__title">Project #8</h3>
+                  <p>AI 작업2</p>
                 </div>
-              </li>
-            </ul>
-          </div>
+              </a>
+            </li>
+          </ul>
         </div>
       </section>
       <!-- #work end -->
