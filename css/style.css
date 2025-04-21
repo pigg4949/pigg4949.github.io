@@ -84,7 +84,6 @@ button:focus {
   top: 0;
   width: 100%;
   padding: 1rem;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1;
@@ -108,10 +107,19 @@ button:focus {
 .header__logo__title {
   font-size: 1.8rem;
 }
+.header__toggle {
+  color: var(--color-white);
+  font-size: 1.5rem;
+  position: absolute;
+  top: 1.3rem;
+  right: 1rem;
+  display: none;
+}
 .header__menu {
   display: flex;
   gap: 4px;
 }
+
 .header__menu__item {
   padding: 8px 16px;
 }
@@ -128,6 +136,7 @@ button:focus {
   background-color: var(--color-primary);
   color: var(--color-text);
   padding: 7rem 1rem 5rem;
+  padding-top: 7rem;
   text-align: center;
 }
 .home__avatar {
@@ -141,7 +150,7 @@ button:focus {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
-.home__title--string {
+.home__title--strong {
   color: var(--color-accent);
 }
 .home__description {
@@ -163,13 +172,13 @@ button:focus {
 }
 
 /* about */
-.skills {
+.majors {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
   margin: 2.5rem 0;
 }
-.skill {
+.major {
   background-color: var(--color-primary-variant);
   padding: 2rem 1rem;
   color: var(--color-text);
@@ -177,16 +186,16 @@ button:focus {
   cursor: default;
   box-shadow: 4px 8px 8px rgba(0, 0, 0, 0.4);
 }
-.skill__icon {
+.major__icon {
   font-size: 4rem;
   margin: 1rem 0;
   color: var(--color-accent);
   transition: all 300ms ease;
 }
-.skill:hover .skill__icon {
+.major:hover .major__icon {
   transform: rotate(-15deg) scale(1.2);
 }
-.skill__title {
+.major__title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
@@ -221,18 +230,18 @@ button:focus {
   background-color: var(--color-primary-variant);
   color: var(--color-text);
 }
-.tools {
+.skills {
   display: grid;
   grid-template-columns: 6fr 4fr;
   margin: 2rem 3rem;
   overflow: hidden;
 }
-.tools__title {
+.skills__title {
   color: var(--color-accent);
   margin: 1rem 0;
   font-size: 1.2rem;
 }
-.tools__coding {
+.skills__coding {
   grid-row: span 2; /* 2개의 행을 차지하도록 설정 */
   padding: 1rem;
   background-color: var(--color-primary);
@@ -257,10 +266,10 @@ button:focus {
   height: 3px;
   background-color: var(--color-accent);
 }
-.tools__tools {
+.skills__tools {
   padding: 1rem;
 }
-.tools__etc {
+.skills__etc {
   padding: 1rem;
   background-color: var(--color-primary);
   filter: brightness(150%);
@@ -268,24 +277,21 @@ button:focus {
 
 /* works */
 
-.works {
+.categories {
   display: flex;
   justify-content: space-between;
   text-align: center;
   gap: 1rem;
   margin: 2.5rem 0;
-}
-
-.work {
   padding: 2rem 0;
 }
 
-.work__button {
+.category {
   background-color: var(--color-accent);
   border-radius: 10px;
 }
 
-.work__button:hover {
+.category:hover {
   border: 2px solid var(--color-primary-variant);
 }
 
@@ -298,7 +304,7 @@ button:focus {
 .project {
   display: flex;
   gap: 8px;
-  margin-bottom: 1rem;
+  margin: 3rem;
   padding: 1rem auto;
   border: 1px solid var(--color-primary-variant);
   border-radius: 8px;
@@ -380,10 +386,11 @@ button:focus {
 
 /* aside */
 
-.aside {
+.arrow-up {
   width: 4rem;
   height: 15vh;
   background-color: var(--color-accent-variant);
+  opacity: 0;
   position: fixed;
   right: 2rem;
   bottom: 5vh;
@@ -418,18 +425,96 @@ button:focus {
   body {
     background-color: rgb(107, 215, 114);
   }
-  html {
-    font-size: 20px;
-  }
 }
 
 /* 화면 너비가 767px 이하일 때 (모바일) */
-@media (max-width: 767px) {
+@media screen and (max-width: 767px) {
   body {
     background-color: rgb(225, 173, 136);
   }
 
-  html {
-    font-size: 24px;
+  .section {
+    padding: 3rem 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .haeder {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .header__menu {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem 4rem;
+    gap: 1rem;
+  }
+
+  .header__toggle {
+    display: block;
+  }
+
+  .header__menu.open {
+    display: flex;
+  }
+
+  .header__nav {
+    width: 100%;
+  }
+
+  #home {
+    padding-bottom: 3rem;
+  }
+
+  #home__title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .majors {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .major {
+    max-width: 25rem;
+    width: 80%;
+  }
+
+  .job {
+    justify-content: center;
+    flex-direction: column;
+    /* display: grid; */
+  }
+
+  .job__img {
+  }
+
+  .projects {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .license {
+    display: contents;
+  }
+
+  .certification__block {
+    display: block;
+  }
+
+  .arrow-up {
+    font-size: 0.5rem;
+    width: 3rem;
+    height: 3rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
   }
 }

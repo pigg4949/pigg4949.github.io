@@ -44,12 +44,15 @@
         <ul class="header__menu">
           <li><a class="header__menu__item active" href="#home">home</a></li>
           <li><a class="header__menu__item" href="#about">pigg4949</a></li>
-          <li><a class="header__menu__item" href="#skills">skill</a></li>
+          <li><a class="header__menu__item" href="#majors">majors</a></li>
           <li><a class="header__menu__item" href="#work">Portfolio</a></li>
           <li><a class="header__menu__item" href="#license">License</a></li>
           <li><a class="header__menu__item" href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <button class="header__toggle">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </header>
     <!-- Header end -->
 
@@ -64,7 +67,7 @@
             alt="pigg4949's profile"
           />
           <h2 class="home__title">
-            Hi. <br /><strong class="home__title--string">이광주</strong>입니다.
+            Hi. <br /><strong class="home__title--strong">이광주</strong>입니다.
           </h2>
           <p class="home__description">
             세상에서 가장 뛰어난 AI 개발자를 꿈꾸는 새싹 프로그래머
@@ -84,20 +87,20 @@
           deserunt distinctio, officia dignissimos perspiciatis voluptas cumque
           ut nam sed exercitationem sequi!
         </p>
-        <ul class="skills">
-          <li class="skill">
-            <i class="fa-brands fa-html5 skill__icon"></i>
-            <p class="skill__title">Front-end</p>
+        <ul class="majors">
+          <li class="major">
+            <i class="fa-brands fa-html5 major__icon"></i>
+            <p class="major__title">Front-end</p>
             <p>HTML, CSS, JavaScript, Node.js, React</p>
           </li>
-          <li class="skill">
-            <i class="fa-solid fa-mobile skill__icon"></i>
-            <p class="skill__title">Mobile</p>
+          <li class="major">
+            <i class="fa-solid fa-mobile major__icon"></i>
+            <p class="major__title">Mobile</p>
             <p>Android, IOS, Kotlin, React-Native</p>
           </li>
-          <li class="skill">
-            <i class="fa-solid fa-rocket skill__icon"></i>
-            <p class="skill__title">AI</p>
+          <li class="major">
+            <i class="fa-solid fa-rocket major__icon"></i>
+            <p class="major__title">AI</p>
             <p>Tensorflow, Python, Pytorch, Numpy</p>
           </li>
         </ul>
@@ -121,10 +124,10 @@
       </section>
       <!-- #about end -->
 
-      <!-- #skills start -->
-      <section id="skills" class="section">
+      <!-- #major start -->
+      <section id="majors" class="section">
         <div class="max-container">
-          <h2 class="title">skills</h2>
+          <h2 class="title">majors</h2>
           <p class="description">language and tools</p>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dicta
@@ -132,53 +135,9 @@
             cupiditate distinctio, temporibus maxime quia, blanditiis eaque?
             Facere, ullam fuga.
           </p>
-          <div class="tools">
-            <section class="tools__coding">
-              <h3 class="tools__title">language</h3>
-              <ul>
-                <li class="bar">
-                  <div class="bar__metadata">
-                    <span>HTML</span><span>100%</span>
-                  </div>
-                  <div class="bar__bg">
-                    <div class="bar__value" style="width: 100%"></div>
-                  </div>
-                </li>
-                <li class="bar">
-                  <div class="bar__metadata">
-                    <span>CSS</span><span>90%</span>
-                  </div>
-                  <div class="bar__bg">
-                    <div class="bar__value" style="width: 90%"></div>
-                  </div>
-                </li>
-                <li class="bar">
-                  <div class="bar__metadata">
-                    <span>JavaScript</span><span>80%</span>
-                  </div>
-                  <div class="bar__bg">
-                    <div class="bar__value" style="width: 80%"></div>
-                  </div>
-                </li>
-                <li class="bar">
-                  <div class="bar__metadata">
-                    <span>Java</span><span>70%</span>
-                  </div>
-                  <div class="bar__bg">
-                    <div class="bar__value" style="width: 70%"></div>
-                  </div>
-                </li>
-                <li class="bar">
-                  <div class="bar__metadata">
-                    <span>Python</span><span>90%</span>
-                  </div>
-                  <div class="bar__bg">
-                    <div class="bar__value" style="width: 90%"></div>
-                  </div>
-                </li>
-              </ul>
-
-              <h3 class="tools__title">language</h3>
+          <div class="skills">
+            <section class="skills__coding">
+              <h3 class="skills__title">language</h3>
               <ul>
                 <li class="bar">
                   <div class="bar__metadata">
@@ -223,8 +182,8 @@
               </ul>
             </section>
 
-            <section class="tools__tools">
-              <h3 class="tools__title">tools</h3>
+            <section class="skills__tools">
+              <h3 class="skills__title">tools</h3>
               <ul>
                 <li>Visual Studio Code</li>
                 <li>IntelliJ</li>
@@ -234,8 +193,8 @@
               </ul>
             </section>
 
-            <section class="tools_etc">
-              <h3 class="tools__title">etc.</h3>
+            <section class="skills_etc">
+              <h3 class="skills__title">etc.</h3>
               <ul>
                 <li>Git</li>
                 <li>SLACK</li>
@@ -252,19 +211,27 @@
         <div class="max-container">
           <div class="work">
             <h2 class="title">Portfolio</h2>
-            <p class="description">Projects</p>
+            <p class="categories">Projects</p>
             <ul>
               <li>
-                <button class="work__button">ALL <span>10</span></button>
+                <button class="category" data-category="all">
+                  ALL <span>10</span>
+                </button>
               </li>
               <li>
-                <button class="work__button">Front-end <span>3</span></button>
+                <button class="category" data-category="front-end">
+                  Front-end <span>3</span>
+                </button>
               </li>
               <li>
-                <button class="work__button">Mobile <span>3</span></button>
+                <button class="category" data-category="mobile">
+                  Mobile <span>3</span>
+                </button>
               </li>
               <li>
-                <button class="work__button">AI <span>4</span></button>
+                <button class="category" data-category="AI">
+                  AI <span>4</span>
+                </button>
               </li>
             </ul>
           </div>
@@ -521,11 +488,10 @@
       <!-- #licesce end -->
 
       <!-- Arrow Up start-->
-      <aside class="aside">
+      <aside class="arrow-up">
         <a href="#home" title="GOtoUP"
           ><i class="fa-solid fa-arrow-up"></i
-          ><i class="fa-solid fa-arrow-up"></i
-          ><i class="fa-solid fa-arrow-up"></i><br />Go<br />to<br />Top</a
+          ><i class="fa-solid fa-arrow-up"></i>GotoTop</a
         >
       </aside>
       <!-- Arrow Up end -->
