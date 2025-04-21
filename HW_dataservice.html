@@ -29,9 +29,7 @@
 
     <div id="mapContainer">
       <div id="mapCard">
-        <div id="mapFront">
-          <div id="map"></div>
-        </div>
+        <div id="map"></div>
         <div id="mapBack"></div>
       </div>
     </div>
@@ -120,7 +118,7 @@
 
             const mapBack = document.getElementById("mapBack");
             console.log("📦 현재 flipped 상태:", flipped);
-            const mapFront = ducument.getElementById("mapFront");
+            const mapFront = ducument.getElementById("map");
             mapFront.style.display = flipped ? "none" : "block";
             mapBack.style.display = flipped ? "block" : "none";
             mapFront.veiw;
