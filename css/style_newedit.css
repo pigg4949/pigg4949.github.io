@@ -132,6 +132,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: var(--color-text-second);
 }
 
 .home__logo {
@@ -144,7 +145,7 @@ a {
 
 .home__contact {
   display: inline-block;
-  background-color: var(--color-accent);
+  background-color: var(--color-background-first);
   color: var(--color-text-first);
   margin: 2rem;
   padding: 0.5rem 1rem;
@@ -173,7 +174,8 @@ a {
   margin: 2rem auto;
   display: flex;
   width: 80%;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 3px 3px 5px 2px rgba(255, 255, 255, 0.6);
+  background-color: var(--color-background-first);
 }
 
 .about__profile__left {
@@ -220,7 +222,7 @@ a {
 .about__career__list {
   padding: 1rem;
   border-radius: 5px;
-  border: 3px dotted var(--color-focus-first);
+  border: 3px dashed var(--color-focus-first);
   margin: 3rem;
 }
 
@@ -466,7 +468,7 @@ input[type="checkbox"]:checked + .project__card {
 
 .certification__img {
   border-radius: 5px;
-  border: 3px dotted var(--color-focus-first);
+  border: 3px dashed var(--color-focus-first);
   margin: 3rem;
 }
 
